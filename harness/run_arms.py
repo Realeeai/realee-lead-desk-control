@@ -7,10 +7,13 @@ control    system prompt = harness/base-system-prompt.txt, nothing else
 treatment  system prompt = the same line + the lead-desk files in LOAD_ORDER
 
 Writes <arm>/run-<n>/:
-  qNN.json           the CLI's JSON output, byte for byte (stderr beside it if there was any)
+  q<N>.json          the CLI's JSON output, byte for byte (stderr beside it if there was any)
   system-prompt.txt  exactly what was passed as the system prompt
-  run-info.json      model, effort, CLI version, the command, start and end times
+  run-info.json      model, effort, CLI version, the command, the repo commit, start and end times
   transcript.md      each prompt and reply, rendered from the .json files with no edits
+
+To re-run against the folder exactly as a past run saw it, check out the commit in its
+run-info.json (run 1 predates that field; it ran at commit 0cd68c5).
 
 Refuses to overwrite a run folder: a bad run is kept, and the next run gets a new number.
 Needs Claude Code on PATH and logged in. Standard library only.
@@ -79,12 +82,18 @@ def main():
     prompt_file = out / "system-prompt.txt"
     prompt_file.write_text(system_prompt(arm), encoding="utf-8", newline="\n")
     version = subprocess.run([claude, "--version"], capture_output=True, text=True).stdout.strip()
+    git = ["git", "-C", str(REPO)]
+    commit = subprocess.run([*git, "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
+    uncommitted = subprocess.run([*git, "status", "--porcelain", "--", "lead-desk", "questions.md", "harness"],
+                                 capture_output=True, text=True).stdout.strip()
     info = {
         "arm": arm,
         "run": int(number),
         "model": MODEL,
         "effort": EFFORT,
         "claude_code_version": version,
+        "repo_commit": commit,
+        "uncommitted_changes_to_folder_questions_or_harness": uncommitted.splitlines(),
         "command": ["claude", *FLAGS, "--system-prompt-file", f"{arm}/run-{number}/system-prompt.txt"],
         "prompt_delivery": "stdin, one fresh session per question, from an empty temporary folder",
         "questions": [q["id"] for q in questions],
