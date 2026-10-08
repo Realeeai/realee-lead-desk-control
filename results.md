@@ -15,6 +15,7 @@
 | Median output tokens per answer (runs 1, 2) | 606, 641 | 963, 943 |
 | Cost of nine answers at list price, from the raw JSON | $0.19, $0.18 | $0.31, $0.26 |
 | Run 3: folder changed because of runs 1 and 2 | — | 9/9, but Q9 is the question the change was made for, so it isn't evidence |
+| Run 4: final folder (README wording only changed after run 3) | — | 9/9, the same tier as run 3 on every question |
 | Outside check: three leads a blank session wrote, keyed before the run | **1/3** | **2/3** |
 
 Grade any run with `python harness/grade.py run <arm>/run-<n>`. Expected tiers and the exact prompt are in [`questions.md`](questions.md), committed in `0cd68c5` before any run folder exists.
@@ -69,7 +70,7 @@ We didn't trim the alert block. It's the part Matt forwards.
 - **Wording** of NEXT varied (for example, Q1 no folder: "ask which TMS and QuickBooks version" against "ask for sample load emails and TMS name"). The folder's NEXT lines barely moved, and its off-contract Q8 SCORE line repeated word for word.
 - **Time:** 12 of 18 answers came within 1.5 s of their run-1 time. The six that moved more were: no folder Q3 (12.1 → 9.3 s), Q6 (9.8 → 13.0), Q7 (7.8 → 9.8) and Q9 (8.0 → 9.8); folder Q2 (11.8 → 8.0) and Q9 (21.4 → 14.8). The speed gap holds in both runs.
 
-Run 3 isn't drift: it ran the changed folder.
+Run 3 isn't drift: it ran the changed folder. Run 4 re-ran that folder after a README-only wording change: all nine tiers matched run 3.
 
 ## What we changed in the folder because of it
 
