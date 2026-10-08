@@ -2,10 +2,12 @@
 
 Logic is **ordered**. First section that produces an outcome **wins**. Every output cites **rule IDs**.
 
+**This is the only file with numbers.** Points, the size band and the tier cut-offs live here and nowhere else. To fit the desk to your own offer, edit this file.
+
 ## 0. Output shape (always)
 
 1. **TIER** — HOT | WARM | COLD | DISQUALIFY | FLAG
-2. **SCORE** — integer 0–10 (see Section 2)
+2. **SCORE** — the addition written out, then the total (see Section 2 and `reference/output-format.md`)
 3. **RULES** — list of rule IDs that fired
 4. **NEXT ACTION** — one imperative line for Matt
 5. **ARTIFACT** — draft alert or pass (see `reference/output-format.md`)
@@ -14,11 +16,11 @@ Logic is **ordered**. First section that produces an outcome **wins**. Every out
 
 ## 1. Hard disqualifiers (1a–1e)
 
-If any match → **DISQUALIFY**, score capped at 3, skip scoring bonuses.
+If any match → **DISQUALIFY**. Do not score; the SCORE line reads `not scored (<rule ID>)`.
 
 | ID | Trigger |
 |----|---------|
-| **1a** | Solo developer / "hire me to code your app" / agency wants white-label dev shop with no ops pain |
+| **1a** | Solo developer / "hire me to code your app" / "build our MVP" / agency wants a white-label dev shop, with no ops pain |
 | **1b** | Consumer, creator, or e-commerce DTC (no B2B ops angle) |
 | **1c** | Company clearly &lt; 20 employees with no budget language and no operational scale pain |
 | **1d** | Student, homework, or "learning AI" with no business context |
@@ -28,17 +30,22 @@ If any match → **DISQUALIFY**, score capped at 3, skip scoring bonuses.
 
 ## 2. Scoring rubric (2a–2f)
 
-Start at 0. Add points; cite each addition. Max 10.
+Start at 0. Add points; cite each addition. Max 10. If the total falls below 0, it is 0.
 
 | ID | Signal | Points |
 |----|--------|--------|
 | **2a** | Company size credibly 50–500 employees (or 30–49 with strong pain + budget) | +2 |
 | **2b** | Clear operational pain — **named** broken process, handoff, or manual workflow | +3 |
 | **2b-lite** | Category evaluation only ("evaluating automation", "looking at vendors") with **no named system** | +1 |
-| **2c** | Budget or investment language ("approved", "spend", "vendor", "this quarter") | +2 |
-| **2d** | Decision maker or strong influencer (Founder, C-suite, VP Ops/RevOps/Sales) | +2 |
+| **2c** | Budget or investment language ("approved", "budgeted", "spend", "this quarter"). Talking to or about vendors is not budget language; that is 2b-lite | +2 |
+| **2d** | Decision maker or strong influencer (Founder, C-suite, VP, or Head/Director of Ops, RevOps or Sales) | +2 |
 | **2e** | Timeline ≤ 90 days or active evaluation | +1 |
-| **2f** | Penalty: vague "curious about AI" with no process pain | −2 (min score 0) |
+| **2f** | Penalty: vague "curious about AI" with no process pain | −2 |
+
+2b and 2b-lite never both fire.
+
+**Show the addition.** The SCORE line lists every rule that added or removed points, with its points, then the total:
+`SCORE: 2a(+2) + 2b(+3) + 2d(+2) = 7/10`. The total must equal the sum of the terms written. A tier is never chosen without this line, unless §1 short-circuits.
 
 ---
 
@@ -51,7 +58,7 @@ After disqualifiers and score:
 | **3a** | 8–10 | **HOT** |
 | **3b** | 5–7 | **WARM** |
 | **3c** | 0–4 | **COLD** |
-| **3d** | DISQUALIFY from §1 | **DISQUALIFY** (ignore score) |
+| **3d** | DISQUALIFY from §1 | **DISQUALIFY** (not scored) |
 
 ---
 
@@ -68,7 +75,7 @@ After disqualifiers and score:
 
 ## 5. FLAG gate (5a)
 
-If **2a** cannot be assessed (no company size hint) AND score would be ≥5 → **FLAG**: ask one question ("How many employees at {company}?") and hold **WARM** until answered.
+If **2a** cannot be assessed (no company size hint) AND score would be ≥5 → **FLAG**: ask one question ("How many employees at {company}?") and hold **WARM** until answered. The SCORE line marks the total as provisional.
 
 ---
 

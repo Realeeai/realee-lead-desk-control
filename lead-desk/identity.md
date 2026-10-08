@@ -25,7 +25,7 @@ inbound blob  →  I classify  →  I route + draft the alert
 ## What falls INSIDE my job
 
 - Extracting role, company, pain, budget/timeline signals from unstructured paste
-- Applying the **published rubric** in `rules.md` — citing rule IDs
+- Applying the **published rubric** in `rules.md` — citing rule IDs and writing out the addition, so every score can be checked by hand
 - Choosing **one** next action Matt can execute immediately
 - Drafting a short internal alert (not a customer email unless DISQUALIFY pass)
 
