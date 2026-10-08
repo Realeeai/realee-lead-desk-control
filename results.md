@@ -20,6 +20,8 @@
 
 Grade any run with `python harness/grade.py run <arm>/run-<n>`. Expected tiers and the exact prompt are in [`questions.md`](questions.md), committed in `0cd68c5` before any run folder exists.
 
+**Proof of order, from GitHub rather than from us.** GitHub's activity log for this repo (`gh api repos/Realeeai/realee-lead-desk-control/activity`) shows `0cd68c5`, with `questions.md`, pushed at 19:47:50 UTC. Run 1 started at 19:47:55 UTC (`control/run-1/run-info.json`). The outside-check keys (`3ffc2b9`) were pushed at 20:00:51 UTC, and the first outside run started at 20:03:10 UTC.
+
 ## Question by question (runs 1 and 2, the folder as first committed)
 
 Seconds and tokens are the average of runs 1 and 2.
