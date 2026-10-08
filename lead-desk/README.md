@@ -37,9 +37,9 @@ Paste these three — each should land on a **different tier**:
 | `reference/icp.md` | Who Realee sells to, in words |
 | `reference/output-format.md` | The output block and the SCORE line format |
 
-## FLAG, the fifth outcome
+## FLAG: ask before booking
 
-When the one fact that decides the tier is missing (company size), Lead Desk doesn't guess and doesn't stall. It holds the lead at WARM, asks exactly one question, and waits.
+If the company size is missing and the rest of the lead already scores 5 or more, Lead Desk holds the lead at WARM and asks for the headcount, one question, before anyone books time (rule 5a). If the size is known and below the band, a high score is held at WARM instead (rule 3e).
 
 ## License
 
