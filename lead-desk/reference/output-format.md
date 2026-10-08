@@ -38,6 +38,8 @@ Write each rule that changed the score, its points in brackets, joined by `+`, t
 | Normal | `SCORE: 2a(+2) + 2b(+3) + 2c(+2) = 7/10` |
 | Penalty | `SCORE: 2a(+2) + 2d(+2) + 2f(-2) = 2/10` |
 | Below zero | `SCORE: 2f(-2) = 0/10 (floor)` |
+| Nothing fired | `SCORE: none = 0/10` |
+| Held for size (3e) | `SCORE: 2b(+3) + 2c(+2) + 2d(+2) + 2e(+1) = 8/10 (held WARM, 3e)` |
 | FLAG | `SCORE: 2b(+3) + 2d(+2) = 5/10 (provisional, 2a unknown)` |
 | DISQUALIFY | `SCORE: not scored (1a)` |
 

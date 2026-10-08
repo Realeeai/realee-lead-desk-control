@@ -2,6 +2,8 @@
 
     python harness/grade.py examples              re-add every SCORE line in lead-desk/examples.md
     python harness/grade.py run control/run-1     grade one run against the key in questions.md
+    python harness/grade.py run control/my-questions-run-1 my-questions.md
+                                                  grade a run of your own questions file (same format)
 
 Points come from the table in lead-desk/rules.md (the only file with numbers), so a
 digit changed in an example, in a run, or in the rules shows up here by name.
@@ -52,6 +54,8 @@ def check_score_line(line, points):
         return []
     terms = TERM.findall(clean)
     total = TOTAL.search(clean)
+    if not terms and re.search(r"SCORE:\s*none\s*=\s*0\s*/\s*10", clean):
+        return []
     if not terms or not total:
         return [f"SCORE line doesn't show the addition: {line.strip()}"]
     problems = []
@@ -87,7 +91,8 @@ def check_examples():
             total = TOTAL.search(score.group(0).replace("*", ""))
             if tier == "DISQUALIFY" and "not scored" not in score.group(0):
                 problems.append("DISQUALIFY must read 'not scored (<rule>)'")
-            if total and tier in ("HOT", "WARM", "COLD") and tier_for(int(total.group(1))) != tier:
+            held = tier == "WARM" and "3e" in score.group(0)
+            if total and tier in ("HOT", "WARM", "COLD") and not held and tier_for(int(total.group(1))) != tier:
                 problems.append(f"total {total.group(1)} maps to {tier_for(int(total.group(1)))}, example says {tier}")
             if total:
                 for quoted in re.findall(r"(?:Score|Provisional)\s+(\d+)/10", body):
@@ -101,9 +106,9 @@ def check_examples():
     return failures == 0
 
 
-def parse_questions():
-    """The shared prompt and each question's lead text and expected tier, from questions.md."""
-    text = QUESTIONS.read_text(encoding="utf-8")
+def parse_questions(path=QUESTIONS):
+    """The shared prompt and each question's lead text and expected tier, from a questions file."""
+    text = Path(path).read_text(encoding="utf-8")
     template = re.search(r"## The prompt both arms get.*?```text\n(.*?)\n```", text, flags=re.S)
     if not template or "{lead}" not in template.group(1):
         sys.exit("questions.md: no shared prompt with a {lead} slot")
@@ -113,14 +118,14 @@ def parse_questions():
         lead = re.search(r"```text\n(.*?)\n```", body, flags=re.S)
         tier = re.search(r"\*\*Expected tier:\*\*\s*([A-Z]+)", body)
         if not lead or not tier or tier.group(1) not in TIERS:
-            sys.exit(f"questions.md: {qid} needs a ```text lead block and an **Expected tier:**")
+            sys.exit(f"{Path(path).name}: {qid} needs a ```text lead block and an **Expected tier:**")
         questions.append({"id": qid, "lead": lead.group(1), "expected": tier.group(1)})
     return template.group(1), questions
 
 
-def grade_run(run_dir):
+def grade_run(run_dir, questions_path=QUESTIONS):
     points = rule_points()
-    _, questions = parse_questions()
+    _, questions = parse_questions(questions_path)
     run_dir = Path(run_dir)
     passed = 0
     print(f"Run: {run_dir.as_posix()}\n")
@@ -154,6 +159,6 @@ if __name__ == "__main__":
     sys.stdout.reconfigure(encoding="utf-8")
     if len(sys.argv) >= 2 and sys.argv[1] == "examples":
         sys.exit(0 if check_examples() else 1)
-    if len(sys.argv) == 3 and sys.argv[1] == "run":
-        sys.exit(0 if grade_run(sys.argv[2]) else 1)
+    if len(sys.argv) in (3, 4) and sys.argv[1] == "run":
+        sys.exit(0 if grade_run(*sys.argv[2:]) else 1)
     sys.exit(__doc__)

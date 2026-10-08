@@ -45,7 +45,7 @@ Start at 0. Add points; cite each addition. Max 10. If the total falls below 0, 
 2b and 2b-lite never both fire.
 
 **Show the addition.** The SCORE line lists every rule that added or removed points, with its points, then the total:
-`SCORE: 2a(+2) + 2b(+3) + 2d(+2) = 7/10`. The total must equal the sum of the terms written. A tier is never chosen without this line, unless §1 short-circuits.
+`SCORE: 2a(+2) + 2b(+3) + 2d(+2) = 7/10`. If no rule fires, write `SCORE: none = 0/10`. The total must equal the sum of the terms written. A tier is never chosen without this line, unless §1 short-circuits.
 
 ---
 
@@ -55,10 +55,13 @@ After disqualifiers and score:
 
 | ID | Score | Tier |
 |----|-------|------|
-| **3a** | 8–10 | **HOT** |
+| **3a** | 8–10, **and 2a fired** | **HOT** |
 | **3b** | 5–7 | **WARM** |
 | **3c** | 0–4 | **COLD** |
 | **3d** | DISQUALIFY from §1 | **DISQUALIFY** (not scored) |
+| **3e** | 8–10 **without 2a**, size known and below the band | **WARM** (held) |
+
+**3e — HOT needs the size band.** A small firm can add up to 8 on problem, budget, authority and timing alone. That's a real lead, but it's smaller than Realee sells to, so it gets nurture, not the founder's calendar. Cite 3e and say in the alert that it's held for size. If the size is unknown rather than small, that's FLAG (5a), not 3e.
 
 ---
 

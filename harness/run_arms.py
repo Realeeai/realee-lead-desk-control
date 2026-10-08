@@ -2,6 +2,8 @@
 
     python harness/run_arms.py control 1
     python harness/run_arms.py treatment 1
+    python harness/run_arms.py control 1 my-questions.md     your own questions file, same format;
+                                                               writes <arm>/my-questions-run-1/
 
 control    system prompt = harness/base-system-prompt.txt, nothing else
 treatment  system prompt = the same line + the lead-desk files in LOAD_ORDER
@@ -26,7 +28,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-from grade import REPO, parse_questions
+from grade import QUESTIONS, REPO, parse_questions
 
 MODEL = "claude-opus-5-5"
 EFFORT = "high"
@@ -67,41 +69,44 @@ def fence(text):
 
 
 def main():
-    if len(sys.argv) != 3 or sys.argv[1] not in ("control", "treatment") or not sys.argv[2].isdigit():
+    if len(sys.argv) not in (3, 4) or sys.argv[1] not in ("control", "treatment") or not sys.argv[2].isdigit():
         sys.exit(__doc__)
     arm, number = sys.argv[1], sys.argv[2]
+    questions_path = Path(sys.argv[3]).resolve() if len(sys.argv) == 4 else QUESTIONS
     claude = shutil.which("claude")
     if not claude:
         sys.exit("Claude Code (`claude`) is not on PATH")
-    out = REPO / arm / f"run-{number}"
+    run_name = f"run-{number}" if questions_path == QUESTIONS else f"{questions_path.stem}-run-{number}"
+    out = REPO / arm / run_name
     if out.exists():
         sys.exit(f"{out} already exists. Runs are never overwritten; use the next number.")
-    out.mkdir(parents=True)
 
-    template, questions = parse_questions()
+    template, questions = parse_questions(questions_path)
+    out.mkdir(parents=True)
     prompt_file = out / "system-prompt.txt"
     prompt_file.write_text(system_prompt(arm), encoding="utf-8", newline="\n")
     version = subprocess.run([claude, "--version"], capture_output=True, text=True).stdout.strip()
     git = ["git", "-C", str(REPO)]
     commit = subprocess.run([*git, "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
-    uncommitted = subprocess.run([*git, "status", "--porcelain", "--", "lead-desk", "questions.md", "harness"],
+    uncommitted = subprocess.run([*git, "status", "--porcelain", "--", "lead-desk", "harness", str(questions_path)],
                                  capture_output=True, text=True).stdout.strip()
     info = {
         "arm": arm,
         "run": int(number),
+        "questions_file": questions_path.relative_to(REPO).as_posix() if questions_path.is_relative_to(REPO) else questions_path.name,
         "model": MODEL,
         "effort": EFFORT,
         "claude_code_version": version,
         "repo_commit": commit,
         "uncommitted_changes_to_folder_questions_or_harness": uncommitted.splitlines(),
-        "command": ["claude", *FLAGS, "--system-prompt-file", f"{arm}/run-{number}/system-prompt.txt"],
+        "command": ["claude", *FLAGS, "--system-prompt-file", f"{arm}/{run_name}/system-prompt.txt"],
         "prompt_delivery": "stdin, one fresh session per question, from an empty temporary folder",
         "questions": [q["id"] for q in questions],
         "started_at": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
     }
 
-    transcript = [f"# {arm} run {number}", "",
-                  f"Rendered from the qNN.json files in this folder, no edits. Model `{MODEL}`, effort `{EFFORT}`, {version}.",
+    transcript = [f"# {arm} {run_name}", "",
+                  f"Rendered from the q<N>.json files in this folder, no edits. Model `{MODEL}`, effort `{EFFORT}`, {version}.",
                   "System prompt: `system-prompt.txt` in this folder.", ""]
     for q in questions:
         prompt = template.replace("{lead}", q["lead"])
