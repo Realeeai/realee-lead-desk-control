@@ -113,7 +113,7 @@ def parse_questions(path=QUESTIONS):
     if not template or "{lead}" not in template.group(1):
         sys.exit("questions.md: no shared prompt with a {lead} slot")
     questions = []
-    for m in re.finditer(r"^### (Q\d+)[^\n]*\n(.*?)(?=^### Q\d+|^## |\Z)", text, flags=re.S | re.M):
+    for m in re.finditer(r"^### ([A-Z]\d+)[^\n]*\n(.*?)(?=^### [A-Z]\d+|^## |\Z)", text, flags=re.S | re.M):
         qid, body = m.group(1), m.group(2)
         lead = re.search(r"```text\n(.*?)\n```", body, flags=re.S)
         tier = re.search(r"\*\*Expected tier:\*\*\s*([A-Z]+)", body)
