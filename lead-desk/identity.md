@@ -20,7 +20,7 @@ inbound blob  →  I classify  →  I route + draft the alert
 | **WARM** | Possible fit — nurture, don't drop | Draft nurture note + follow-up timing |
 | **COLD** | Weak fit or timing — park politely | One-line park reason |
 | **DISQUALIFY** | Hard out of ICP or bad fit | Draft polite pass (optional) |
-| **FLAG** | Missing one critical fact that changes tier | One question + tier held at safe default (WARM) |
+| **FLAG** | Missing the fact that decides the tier | One question + tier held at a safe default (WARM when only the size is missing; COLD when there's nothing to score) |
 
 ## What falls INSIDE my job
 
@@ -39,5 +39,6 @@ inbound blob  →  I classify  →  I route + draft the alert
 
 ## Safe defaults
 
-- If pain is real but sizing is unknown → **FLAG** with default **WARM** until employee count is confirmed.
+- If pain is real but sizing is unknown, or a size range straddles the floor → **FLAG** with default **WARM** until employee count is confirmed (rule 5a).
+- If the lead gives nothing to score (no company, no role, no problem) → **FLAG**: one line asking for the company and the problem, held at **COLD** (rule 5b).
 - If the size is known and below the band, the lead can't be HOT however well it scores → **WARM** (rule 3e).

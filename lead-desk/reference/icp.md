@@ -5,7 +5,7 @@ Who Realee sells to and why. The numbers that score a lead (size band, points, c
 ## Ideal customer
 
 - **Who:** Operations, RevOps, or Founder-level at **B2B companies** (professional services, SaaS, logistics, agencies with ops pain — not dev shops selling code)
-- **Size:** mid-sized operating companies; the exact band is rule **2a** in `rules.md`
+- **Size:** established operating companies, and larger is better; the floor is rule **2a** in `rules.md`
 - **Pain:** Manual workflows, broken handoffs, sales/ops data mess, "we need systems that run"
 - **Motion:** Budget or an evaluation in the near term (rules **2c** and **2e**)
 

@@ -24,7 +24,7 @@ Subject: [Lead Alert] {TIER}: {Name} from {Company}
 Suggested line to lead (HOT/WARM only):
 "{paste-ready reply}"
 
-FLAG tier: include the hold question from rules.md §5a in the draft body (no suggested reply until answered).
+FLAG tier: include the hold question from rules.md §5a or §5b in the draft body (no suggested reply until answered).
 
 DISQUALIFY tier: include polite pass wording in the draft body.
 ```
@@ -40,7 +40,8 @@ Write each rule that changed the score, its points in brackets, joined by `+`, t
 | Below zero | `SCORE: 2f(-2) = 0/10 (floor)` |
 | Nothing fired | `SCORE: none = 0/10` |
 | Held for size (3e) | `SCORE: 2b(+3) + 2c(+2) + 2d(+2) + 2e(+1) = 8/10 (held WARM, 3e)` |
-| FLAG | `SCORE: 2b(+3) + 2d(+2) = 5/10 (provisional, 2a unknown)` |
+| FLAG, size unknown (5a) | `SCORE: 2b(+3) + 2d(+2) = 5/10 (provisional, 2a unknown)` |
+| FLAG, nothing to score (5b) | `SCORE: none = 0/10 (provisional, nothing to score)` |
 | DISQUALIFY | `SCORE: not scored (1a)` |
 
 The total must equal the sum of the terms written. If it doesn't, the run is wrong, whatever the tier.

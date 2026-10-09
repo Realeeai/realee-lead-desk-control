@@ -39,7 +39,7 @@ Paste these three — each should land on a **different tier**:
 
 ## FLAG: ask before booking
 
-If the company size is missing and the rest of the lead already scores 5 or more, Lead Desk holds the lead at WARM and asks for the headcount, one question, before anyone books time (rule 5a). If the size is known and below the band, a high score is held at WARM instead (rule 3e).
+If the company size is missing, or given as a range that straddles the floor, and the rest of the lead already scores 5 or more, Lead Desk holds the lead at WARM and asks for the headcount, one question, before anyone books time (rule 5a). If the lead gives nothing to score at all, it sends one line asking for the company and the problem, and holds at COLD (rule 5b). If the size is known and below the floor, a high score is held at WARM (rule 3e).
 
 ## License
 
