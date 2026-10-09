@@ -33,7 +33,7 @@ python harness/grade.py examples
 
 Use any run number that doesn't exist yet; the runner never overwrites a run.
 
-**Which folder each run saw.** Runs 1 and 2 used the folder as first committed (commit `0cd68c5`). Runs 3 and 4 used it after the first round of changes. Runs 5–7 used the current folder, after the operator's review. A treatment re-run at the latest commit should match run 7; grade it with `questions-after-review.md`. To reproduce runs 1 and 2, run the same commands after `git switch --detach 0cd68c5`. Each `run-info.json` from run 2 on records its commit.
+**Which folder each run saw.** Runs 1 and 2 used the folder as first committed (commit `0cd68c5`). Runs 3 and 4 used it after the first round of changes. Runs 5–7 used the current folder, after the operator's review. A treatment re-run at the latest commit should match run 7; grade it with `questions-after-review.md`. To reproduce runs 1 and 2, `git switch --detach 0cd68c5` first, then run the same commands but grade without the last argument (`python harness/grade.py run treatment/run-8`); that commit has only the committed key. Each `run-info.json` from run 2 on records its commit.
 
 **Your own question.** Copy the format of `questions.md` (the shared prompt, then `### X1` blocks with a `text` lead and an `**Expected tier:**` line) into a file, then pass that file as the last argument: `python harness/run_arms.py control 1 mine.md`, then `python harness/grade.py run control/mine-run-1 mine.md`.
 
