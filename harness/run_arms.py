@@ -17,7 +17,9 @@ Writes <arm>/run-<n>/:
 To re-run against the folder exactly as a past run saw it, check out the commit in its
 run-info.json (run 1 predates that field; it ran at commit 0cd68c5).
 
-Refuses to overwrite a run folder: a bad run is kept, and the next run gets a new number.
+A question that times out gets q<N>.timeout.txt instead of q<N>.json, grades as a fail, and the
+run continues. Refuses to overwrite a run folder: a bad run is kept, and the next run gets a new
+number (treatment/run-5 is one: the runner crashed on a timeout before this handling existed).
 Needs Claude Code on PATH and logged in. Standard library only.
 """
 import datetime
@@ -32,6 +34,7 @@ from grade import QUESTIONS, REPO, parse_questions
 
 MODEL = "claude-opus-5-5"
 EFFORT = "high"
+TIMEOUT = 600  # seconds per question
 LOAD_ORDER = [
     "README.md",
     "identity.md",
@@ -110,12 +113,20 @@ def main():
                   "System prompt: `system-prompt.txt` in this folder.", ""]
     for q in questions:
         prompt = template.replace("{lead}", q["lead"])
-        with tempfile.TemporaryDirectory(prefix="lead-desk-run-") as empty:
-            done = subprocess.run(
-                [claude, *FLAGS, "--system-prompt-file", str(prompt_file)],
-                input=prompt.encode("utf-8"), capture_output=True, cwd=empty, timeout=600,
-            )
         stem = q["id"].lower()
+        try:
+            with tempfile.TemporaryDirectory(prefix="lead-desk-run-") as empty:
+                done = subprocess.run(
+                    [claude, *FLAGS, "--system-prompt-file", str(prompt_file)],
+                    input=prompt.encode("utf-8"), capture_output=True, cwd=empty, timeout=TIMEOUT,
+                )
+        except subprocess.TimeoutExpired:
+            # Recorded, not retried: a timeout counts as a failed answer (no qN.json) and the run goes on.
+            stats = f"timed out after {TIMEOUT} s, no answer"
+            (out / f"{stem}.timeout.txt").write_text(stats + "\n", encoding="utf-8", newline="\n")
+            transcript += [f"## {q['id']}", "", f"_{stats}_", ""]
+            print(f"{arm} run {number} {q['id']}: {stats}", flush=True)
+            continue
         (out / f"{stem}.json").write_bytes(done.stdout)
         if done.stderr.strip():
             (out / f"{stem}.stderr.txt").write_bytes(done.stderr)

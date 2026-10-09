@@ -134,7 +134,8 @@ def grade_run(run_dir, questions_path=QUESTIONS):
     for q in questions:
         path = run_dir / f"{q['id'].lower()}.json"
         if not path.exists():
-            print(f"| {q['id']} | {q['expected']} | (no file) | FAIL | | | |")
+            why = "(timed out)" if path.with_suffix(".timeout.txt").exists() else "(no file)"
+            print(f"| {q['id']} | {q['expected']} | {why} | FAIL | | | |")
             continue
         raw = json.loads(path.read_text(encoding="utf-8"))
         reply = (raw.get("result") or "").replace("*", "").replace("`", "")
