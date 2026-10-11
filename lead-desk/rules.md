@@ -1,96 +1,107 @@
 # rules.md — Realee Lead Desk
 
-Logic is **ordered**. First section that produces an outcome **wins**. Every output cites **rule IDs**.
+The desk works in two steps, and they never mix:
 
-**This is the only file with numbers.** Points, the size band and the tier cut-offs live here and nowhere else. To fit the desk to your own offer, edit this file.
+1. **Ask.** The intake script (`reference/intake-script.md`) asks every question, in order, whatever the answers. Nothing is judged and nothing is stopped while the questions are being asked.
+2. **Score.** After the last answer, or when the desk is handed a finished conversation or a pasted lead, it scores all six factors, then decides the tier. If someone stopped partway, whatever they answered is still scored and passed on.
 
-## 0. Output shape (always)
-
-1. **TIER** — HOT | WARM | COLD | DISQUALIFY | FLAG
-2. **SCORE** — the addition written out, then the total (see Section 2 and `reference/output-format.md`)
-3. **RULES** — list of rule IDs that fired
-4. **NEXT ACTION** — one imperative line for Matt
-5. **ARTIFACT** — draft alert or pass (see `reference/output-format.md`)
+**This is the only file with numbers.** Weights, scales and tier cut-offs live here and nowhere else.
 
 ---
 
-## 1. Hard disqualifiers (1a–1e)
+## 1. Six factors, each on a 5-option scale
 
-If any match → **DISQUALIFY**. Do not score; the SCORE line reads `not scored (<rule ID>)`.
+Place each answer on its factor's scale, option 1 to 5. **Points = option × weight.** The weights add up to 20, so the most a lead can score is 100.
 
-| ID | Trigger |
-|----|---------|
-| **1a** | Solo developer / "hire me to code your app" / "build our MVP" / agency wants a white-label dev shop, with no ops pain |
-| **1b** | Consumer, creator, or e-commerce DTC (no B2B ops angle) |
-| **1c** | Company clearly &lt; 20 employees with no budget language and no operational scale pain |
-| **1d** | Student, homework, or "learning AI" with no business context |
-| **1e** | Competitor, vendor pitch, or recruiter (selling to Realee, not buying) |
+| ID | Factor | Weight | Max |
+|----|--------|--------|-----|
+| **P** | Problem: what they want solved | 5 | 25 |
+| **B** | Budget | 4 | 20 |
+| **S** | Company size | 4 | 20 |
+| **A** | People affected | 3 | 15 |
+| **R** | Role | 2 | 10 |
+| **T** | Timeline | 2 | 10 |
 
----
+The problem weighs most, because the problem is what Realee solves. Budget and company size come next, and larger is better on both.
 
-## 2. Scoring rubric (2a–2f)
+| Option | P — Problem | B — Budget | S — Company size | A — People affected | R — Role | T — Timeline |
+|---|---|---|---|---|---|---|
+| **1** | Nothing specific: curious, "what can AI do for us" | Under $5k | 1–9 people | 1–2 people | No business role (student, job seeker) | None, or a year or more |
+| **2** | A general area or category, nothing broken named ("evaluating automation platforms") | $5k to under $15k | 10–49 | 3–9 | Individual contributor, coordinator | 6–12 months |
+| **3** | A real problem in general terms ("intake is slow and things slip", "marketing and leadership keep miscommunicating") | $15k to under $30k | 50–199 | 10–24 | Manager, team lead | 3–6 months |
+| **4** | A specific broken step, handoff or manual task, or a specific thing they want built | $30k to under $70k | 200–999 | 25–99 | Director, head of a function | 1–3 months |
+| **5** | Specific, and they say what it costs them now: hours, people, money, errors, lost deals | $70k or more | 1,000 or more | 100 or more | VP, C-suite, founder, owner | Under a month, or "now" |
 
-Start at 0. Add points; cite each addition. Max 10. If the total falls below 0, it is 0.
-
-| ID | Signal | Points |
-|----|--------|--------|
-| **2a** | Company size credibly 50 employees or more, with no upper limit: larger is better (or 30–49 with strong pain + budget) | +2 |
-| **2b** | Clear operational pain — **named** broken process, handoff, or manual workflow | +3 |
-| **2b-lite** | Category evaluation only ("evaluating automation", "looking at vendors") with **no named system** | +1 |
-| **2c** | Budget or investment language ("approved", "budgeted", "spend", "this quarter"). Talking to or about vendors is not budget language; that is 2b-lite | +2 |
-| **2d** | Decision maker or strong influencer (Founder, C-suite, VP, or Head/Director of Ops, RevOps or Sales) | +2 |
-| **2e** | Timeline ≤ 90 days or active evaluation | +1 |
-| **2f** | Penalty: vague "curious about AI" with no process pain | −2 |
-
-2b and 2b-lite never both fire.
-
-**Show the addition.** The SCORE line lists every rule that added or removed points, with its points, then the total:
-`SCORE: 2a(+2) + 2b(+3) + 2d(+2) = 7/10`. If no rule fires, write `SCORE: none = 0/10`. The total must equal the sum of the terms written. A tier is never chosen without this line, unless §1 short-circuits.
+Industry and company type are not factors. A consumer brand, an agency or a marketing team scores on the same six questions as anyone else.
 
 ---
 
-## 3. Tier mapping (3a–3e)
+## 2. Unanswered questions
 
-After disqualifiers and score:
+- **An unanswered question scores option 3, the middle.** A missing answer neither sinks a lead nor lifts it. Mark it with `?` in the SCORE line (`B?3(+12)`) and put the question under ASK NEXT.
+- **"Budget approved" with no amount** is unanswered for B: option 3, and the range goes under ASK NEXT.
+- **A range that spans two options** (for example "11-50 people") counts as the lower option. Put the exact figure under ASK NEXT.
+- **Every output lists ASK NEXT:** each question the lead hasn't answered, in script order, or "nothing, all answered".
+
+---
+
+## 3. Passes (3a–3b), decided after scoring
+
+After scoring, check in this order: passes (§3), then FLAG (§4), then the score (§5). The first one that applies sets the tier.
+
+Only two things end in **DISQUALIFY**, and only after the lead has been scored. The score is still shown.
+
+| ID | Pass when what they said shows… |
+|----|------|
+| **3a** | They're selling to Realee: a vendor, agency, contractor, recruiter or competitor offering their services |
+| **3b** | A student or learner asking for themselves, with no business behind it (homework, a capstone, "teach me AI") |
+
+Nothing else is a pass. Industry, company type and wanting an app built never are.
+
+---
+
+## 4. FLAG (4a)
+
+**4a.** If the problem (P) is unanswered, or fewer than three of the six questions are answered, there's too little to score → **FLAG**. Ask every unanswered question before tiering.
+
+---
+
+## 5. Tiers (5a–5c)
+
+If no pass and no FLAG, the score decides:
 
 | ID | Score | Tier |
 |----|-------|------|
-| **3a** | 8–10, **and 2a fired** | **HOT** |
-| **3b** | 5–7 | **WARM** |
-| **3c** | 0–4 | **COLD** |
-| **3d** | DISQUALIFY from §1 | **DISQUALIFY** (not scored) |
-| **3e** | 8–10 **without 2a**, size known and below the 2a floor | **WARM** (held) |
+| **5a** | 70–100 | **HOT** |
+| **5b** | 50–69 | **WARM** |
+| **5c** | 0–49 | **COLD** |
 
-**3e — HOT needs the size band.** A small firm can add up to 8 on problem, budget, authority and timing alone. That's a real lead, but it's smaller than Realee sells to, so it gets nurture, not the founder's calendar. Cite 3e and say in the alert that it's held for size. If the size is unknown rather than small, that's FLAG (5a), not 3e.
+A lead that's average on every question (option 3 across the board) scores 60, the middle of WARM. HOT means above average overall; COLD means below.
+
+**Show the addition.** The SCORE line lists all six factors in the order P, B, S, A, R, T, each with its option and points, then the total:
+`SCORE: P4(+20) + B?3(+12) + S4(+16) + A2(+6) + R5(+10) + T4(+8) = 72/100`. The total must equal the sum of the terms written.
 
 ---
 
-## 4. Next action (4a–4d)
+## 6. Next action (6a–6e)
 
 | Tier | ID | Next action |
 |------|-----|-------------|
-| HOT | **4a** | Book discovery within 48h — draft alert includes cal link placeholder |
-| WARM | **4b** | Add to nurture — send value asset in 3 days, no hard pitch |
-| COLD | **4c** | Park — no personal time; optional monthly check-in |
-| DISQUALIFY | **4d** | Send polite pass or no reply — do not nurture |
+| HOT | **6a** | Book discovery within 48h, and ask anything in ASK NEXT on the call |
+| WARM | **6b** | Nurture: send a value asset in 3 days, and ask what's in ASK NEXT |
+| COLD | **6c** | Park, with a monthly check-in, and ask what's in ASK NEXT if they reply |
+| FLAG | **6d** | Ask every question in ASK NEXT, then score again |
+| DISQUALIFY | **6e** | Polite pass, no nurture |
 
 ---
 
-## 5. FLAG gates (5a–5b)
+## 7. Draft artifact (7a)
 
-**5a — size unknown.** If **2a** cannot be assessed AND score would be ≥5 → **FLAG**: ask one question ("How many employees at {company}?") and hold **WARM** until answered. 2a can't be assessed when there's no size hint, or when the size is a range where some values would earn 2a and some wouldn't (e.g. "11-50"). The SCORE line marks the total as provisional.
-
-**5b — nothing to score.** If the lead names no company, no role and no problem → **FLAG**: send one line asking which company they're with and what they want fixed, and hold **COLD** until they answer. One line isn't personal time, and parking a lead you can't judge decides nothing. SCORE: `none = 0/10 (provisional, nothing to score)`.
-
----
-
-## 6. Draft artifact (6a)
-
-Always produce the internal alert block from `reference/output-format.md` for **every tier** (HOT, WARM, COLD, FLAG, DISQUALIFY).
+Always produce the internal alert block from `reference/output-format.md`, for every tier.
 
 | Tier | Draft content |
 |------|----------------|
-| HOT / WARM | Full alert + suggested reply line to lead |
-| FLAG | Alert + the one hold question (5a: employee count; 5b: company and problem) |
+| HOT / WARM | Full alert + suggested reply line to the lead |
 | COLD | Internal alert; no suggested reply line |
-| DISQUALIFY | Internal alert + polite pass wording (do not nurture) |
+| FLAG | Alert + the questions to ask |
+| DISQUALIFY | Internal alert + polite pass wording |

@@ -41,6 +41,7 @@ LOAD_ORDER = [
     "rules.md",
     "examples.md",
     "reference/icp.md",
+    "reference/intake-script.md",
     "reference/output-format.md",
 ]
 # --safe-mode: no CLAUDE.md, memory, skills, plugins or hooks. --tools "": no tools.

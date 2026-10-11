@@ -1,25 +1,23 @@
 # ICP — Realee Lead Desk
 
-Who Realee sells to and why. The numbers that score a lead (size band, points, cut-offs) are in `rules.md` only; this file doesn't repeat them.
+Who Realee sells to and why. The numbers that score a lead (weights, scales, cut-offs) are in `rules.md` only; this file doesn't repeat them.
 
 ## Ideal customer
 
-- **Who:** Operations, RevOps, or Founder-level at **B2B companies** (professional services, SaaS, logistics, agencies with ops pain — not dev shops selling code)
-- **Size:** established operating companies, and larger is better; the floor is rule **2a** in `rules.md`
-- **Pain:** Manual workflows, broken handoffs, sales/ops data mess, "we need systems that run"
-- **Motion:** Budget or an evaluation in the near term (rules **2c** and **2e**)
+- **Who:** any business whose people are stuck on how work gets done: broken handoffs, repeated manual work, things slipping, teams that don't talk. B2B or consumer-facing, any industry. **The problem decides, never the industry.**
+- **Size:** larger is better, for both the company and the team that feels the problem.
+- **Problem:** the more specific, and the clearer its cost, the better.
+- **Motion:** a budget and a near-term timeline help, and the script always asks for both.
 
-## Not ICP
+## Not a fit
 
-The hard outs are rules **1a–1e** in `rules.md`. In plain words:
+Only two kinds of lead, both judged from what they say, after scoring (rules **3a–3b**):
 
-- Developers shopping for APIs or "build my MVP"
-- Students, hobbyists, "learning AI"
-- Consumer / creator / DTC with no B2B ops angle
-- Vendors pitching Realee
+- People selling to Realee: vendors, agencies, contractors, recruiters, competitors.
+- Students or learners asking for themselves, with no business behind it.
 
-## What Realee sells (context for classification)
+## What Realee sells (context for scoring)
 
-Realee AI deploys **AI systems** for B2B operators — workflow automation, deployed intelligence, sales/ops augmentation. Not generic AI consulting slides; we build and run systems.
+Realee AI builds and runs **AI systems** for businesses: workflow automation, internal tools, and the apps that sit on them. Not generic AI consulting slides; we build and run systems.
 
 **Booking placeholder:** `https://cal.com/realee/discovery`

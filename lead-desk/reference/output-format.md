@@ -5,16 +5,17 @@ Every run returns this block (markdown):
 ```text
 ---
 TIER: [HOT|WARM|COLD|DISQUALIFY|FLAG]
-SCORE: [the addition] = [total]/10
-RULES: [comma-separated rule IDs]
+SCORE: P?(+?) + B?(+?) + S?(+?) + A?(+?) + R?(+?) + T?(+?) = [total]/100
+RULES: [rule IDs that decided the tier, e.g. 5a, or 3a, or 4a]
+ASK NEXT: [each unanswered question, in script order, or "nothing, all answered"]
 NEXT ACTION: [one line]
 ---
 
 LEAD: {Name} | {Company} | {Role}
 SOURCE: {if known}
-PAIN: {1-2 sentences}
+PROBLEM: {1-2 sentences, in their words where possible}
 
-RATIONALE: {why these rules fired}
+RATIONALE: {which option each factor got, and why}
 
 --- DRAFT ALERT ---
 Subject: [Lead Alert] {TIER}: {Name} from {Company}
@@ -24,25 +25,20 @@ Subject: [Lead Alert] {TIER}: {Name} from {Company}
 Suggested line to lead (HOT/WARM only):
 "{paste-ready reply}"
 
-FLAG tier: include the hold question from rules.md §5a or §5b in the draft body (no suggested reply until answered).
+FLAG tier: list the questions to ask in the draft body.
 
 DISQUALIFY tier: include polite pass wording in the draft body.
 ```
 
 ## The SCORE line (show the addition)
 
-Write each rule that changed the score, its points in brackets, joined by `+`, then `=` and the total. Point values come from `rules.md` §2 only.
+All six factors, always in the order P, B, S, A, R, T. Each term is the factor's letter, the option (1–5), and its points (option × weight from `rules.md`) in brackets. An unanswered factor gets a `?` before its option and scores option 3.
 
 | Case | SCORE line |
 |------|------------|
-| Normal | `SCORE: 2a(+2) + 2b(+3) + 2c(+2) = 7/10` |
-| Penalty | `SCORE: 2a(+2) + 2d(+2) + 2f(-2) = 2/10` |
-| Below zero | `SCORE: 2f(-2) = 0/10 (floor)` |
-| Nothing fired | `SCORE: none = 0/10` |
-| Held for size (3e) | `SCORE: 2b(+3) + 2c(+2) + 2d(+2) + 2e(+1) = 8/10 (held WARM, 3e)` |
-| FLAG, size unknown (5a) | `SCORE: 2b(+3) + 2d(+2) = 5/10 (provisional, 2a unknown)` |
-| FLAG, nothing to score (5b) | `SCORE: none = 0/10 (provisional, nothing to score)` |
-| DISQUALIFY | `SCORE: not scored (1a)` |
+| All answered | `SCORE: P5(+25) + B4(+16) + S3(+12) + A3(+9) + R5(+10) + T4(+8) = 80/100` |
+| Some unanswered | `SCORE: P4(+20) + B?3(+12) + S4(+16) + A?3(+9) + R5(+10) + T4(+8) = 75/100` |
+| DISQUALIFY (still scored) | `SCORE: P4(+20) + B?3(+12) + S2(+8) + A?3(+9) + R2(+4) + T?3(+6) = 59/100`, with RULES: 3a |
 
 The total must equal the sum of the terms written. If it doesn't, the run is wrong, whatever the tier.
 
@@ -57,5 +53,5 @@ The total must equal the sum of the terms written. If it doesn't, the run is wro
 | Source | |
 | Score | |
 | Tier | |
-| Pain | |
-| Rationale | |
+| Problem | |
+| Ask next | |
