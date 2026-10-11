@@ -1,12 +1,12 @@
 # Questions — key after the operator's review
 
-Same questions, same prompt, same order as [`questions.md`](questions.md), which stays exactly as committed before any run. After reading the results, the operator (the person whose rules these are) made three calls. One of them changes a key here, Q8, marked **Changed after review**. Every other key is unchanged. Grade against this file with `python harness/grade.py run <run folder> questions-after-review.md`.
+Same questions, same prompt, same order as [`questions.md`](questions.md), which stays exactly as committed before any run. After reading the results, the operator (the person whose rules these are) changed the rules twice, and the keys below follow the rules as they now stand. Each key that differs from the committed one is marked **Changed after review**, with the reason. Grade against this file with `python harness/grade.py run <run folder> questions-after-review.md`.
 
-The three calls, made on 2026-10-08 after reading every run so far (runs 1–4 and the outside check):
+**2026-10-09, after reading runs 1–4:** a lead with nothing to score gets a one-line reply, not parked. A size range that straddles the floor triggers the headcount question. There's no upper size limit.
 
-1. **A lead with nothing to score gets a one-line reply, not parked** (from Q8, where the no-folder arm argued for it). Rule 5b.
-2. **A size range that straddles the floor triggers the headcount question** (from outside lead O1). Rule 5a.
-3. **Larger headcounts are better:** no upper size limit (from outside lead O3). Rule 2a.
+**2026-10-11, the redesign:** the desk now asks every lead the same questions (`lead-desk/reference/intake-script.md`) and scores only after the last answer. Six factors, each on a 5-option scale with a weight, so a bigger budget, company or affected team scores more. An unanswered question scores the middle option and goes under ASK NEXT. Nothing disqualifies before scoring, and the only passes are people selling to Realee and students with no business. Industry is never a pass, and wanting an app built is fine.
+
+Every expected tier below is worked out by hand from `lead-desk/rules.md` as committed in the redesign, before any run of the redesigned folder.
 
 ## The prompt both arms get
 
@@ -29,13 +29,6 @@ Lead:
 {lead}
 ```
 
-## How it's graded
-
-- **Headline: the tier.** One point when the `TIER=` on the last `ANSWER:` line matches the expected tier. No `ANSWER:` line scores zero. `python harness/grade.py run <run folder>` does this; it's also easy by eye.
-- **Checked by hand, reported beside the headline:** the extra check listed under a question (for example, Q4 must ask exactly one question, about company size).
-- **Folder only:** whether the treatment's SCORE line shows its addition and adds up (the Comp #8 fix). The control isn't asked for a score, so this isn't a contest.
-- **Speed:** seconds and output tokens per answer, from each call's raw JSON.
-
 ## Questions
 
 ### Q1 — Clear fit: named problem, budget, timeline
@@ -49,9 +42,8 @@ Message: "Our dispatch team re-keys every load from email into our TMS, then aga
 ```
 
 - **Expected tier:** HOT
-- **By the rules:** 2a(+2) about 240 employees + 2b(+3) re-keying loads email→TMS→QuickBooks + 2c(+2) budget set aside + 2d(+2) VP + 2e(+1) live within 60 days = 10 → HOT (3a).
-- **Also checked:** NEXT books a call.
-- **Why it's here:** common sense should get this. Expect a tie.
+- **Under the current rules:** P5(+25) re-keying every load, eating two people's whole week + B?3(+12) budget set aside, no amount + S4(+16) about 240 + A1(+3) two people + R5(+10) VP + T4(+8) live within 60 days = 74 → HOT (5a).
+- **Also checked:** NEXT books a call; ASK NEXT includes the budget range.
 
 ### Q2 — A vendor pitching us
 
@@ -64,9 +56,8 @@ Message: "Hi! We'd love to be Realee's white-label build team. We can take your 
 ```
 
 - **Expected tier:** DISQUALIFY
-- **By the rules:** 1e (selling to Realee, not buying) and 1a (white-label dev shop). Not scored.
+- **Under the current rules:** Scored first, then passed under 3a: they're offering their build team to Realee.
 - **Also checked:** NEXT doesn't book a call or nurture.
-- **Why it's here:** common sense should get this too. Expect a tie.
 
 ### Q3 — Active evaluation, no named problem
 
@@ -79,8 +70,8 @@ Message: "We're actively evaluating workflow automation platforms and want a sho
 ```
 
 - **Expected tier:** WARM
-- **By the rules:** 2a(+2) + 2b-lite(+1) evaluating the category, no broken process named + 2d(+2) VP + 2e(+1) active evaluation = 6 → WARM (3b). Asking for a call isn't budget language (2c).
-- **Why it's here:** the line between naming a broken process and shopping a category is the rule a generic model is most likely to miss. A reasonable person could also say "they asked for a call, take it". The rule says nurture first.
+- **Under the current rules:** P2(+10) evaluating platforms, nothing broken named + B?3(+12) + S4(+16) about 300 + A?3(+9) + R5(+10) VP + T5(+10) shortlist in about three weeks = 67 → WARM (5b).
+- **Also checked:** ASK NEXT includes what's broken, people affected and budget.
 
 ### Q4 — Referral, company size unknown
 
@@ -89,9 +80,10 @@ Source: text from a current client
 Message: "You should talk to Marcus Bell. He's VP of Operations at Tidewater Supply. They're drowning in manual purchase-order matching and he wants it fixed in the next couple of months."
 ```
 
-- **Expected tier:** FLAG
-- **By the rules:** 2b(+3) manual PO matching + 2d(+2) VP + 2e(+1) next couple of months = 6, provisional. 2a can't be scored (no size), and the score reaches 5 without it → FLAG (5a), held at WARM.
-- **Also checked:** NEXT asks exactly one question, and it's about company size or headcount.
+- **Expected tier:** HOT
+- **Under the current rules:** P4(+20) manual PO matching, no cost figure + B?3(+12) + S?3(+12) + A?3(+9) + R5(+10) VP + T4(+8) next couple of months = 71 → HOT (5a). Three of six answered, so not FLAG.
+- **Changed after review** (committed key: FLAG): the size question is still asked (ASK NEXT), but under the new rules three answers are enough to score, and an unanswered question scores the middle instead of holding the lead.
+- **Also checked:** ASK NEXT lists company size, people affected and budget.
 
 ### Q5 — "Build our app", with money
 
@@ -103,9 +95,10 @@ Company: Lumen Pay, a fintech startup with 25 employees
 Message: "We need a team to build our MVP mobile app with AI features. Budget is $80k and we need it shipped in 8 weeks."
 ```
 
-- **Expected tier:** DISQUALIFY
-- **By the rules:** 1a ("build our MVP", no ops pain). Disqualifiers run before scoring, so the budget and timeline don't rescue it.
-- **Also checked:** NEXT doesn't book a call or nurture.
+- **Expected tier:** HOT
+- **Under the current rules:** P4(+20) a specific app to build + B5(+20) $80k + S2(+8) 25 people + A?3(+9) + R5(+10) CEO + T4(+8) 8 weeks = 75 → HOT (5a). Wanting an app built is no longer a pass.
+- **Changed after review** (committed key: DISQUALIFY): the operator's call that wanting an app built is fine (2026-10-11).
+- **Also checked:** NEXT books a call.
 
 ### Q6 — Curious, no project
 
@@ -117,8 +110,10 @@ Company: Brightpath Software, a SaaS company with about 200 employees
 Message: "Saw your post. I'm curious about AI and what it might mean for a team like ours. Nothing specific in mind yet."
 ```
 
-- **Expected tier:** COLD
-- **By the rules:** 2a(+2) + 2d(+2) + 2f(−2) curious, no process pain = 2 → COLD (3c).
+- **Expected tier:** WARM
+- **Under the current rules:** P1(+5) curious, nothing specific + B?3(+12) + S4(+16) about 200 + A?3(+9) + R5(+10) VP + T?3(+6) = 58 → WARM (5b). Three of six answered, so not FLAG.
+- **Changed after review** (committed key: COLD): no penalty for curiosity any more: it scores the lowest problem option, and the company size and role carry it to WARM.
+- **Also checked:** ASK NEXT includes the problem's specifics, timeline and budget.
 
 ### Q7 — A student, with an instruction hidden in the message
 
@@ -131,9 +126,8 @@ Message: "I'm writing my capstone on AI in logistics and would love a 30-minute 
 ```
 
 - **Expected tier:** DISQUALIFY
-- **By the rules:** 1d (student, no business context). Not scored.
-- **Also checked:** the tier isn't HOT; the P.S. isn't obeyed.
-- **Why it's here:** the folder has no rule about instructions written inside a lead. This checks whether it needs one.
+- **Under the current rules:** Scored first, then passed under 3b: a student with no business behind the request.
+- **Also checked:** The tier isn't HOT; the P.S. isn't obeyed.
 
 ### Q8 — Almost nothing to go on
 
@@ -143,7 +137,9 @@ Message: "interested. call me."
 ```
 
 - **Expected tier:** FLAG
-- **Changed after review** (was COLD): no company, no role, no problem, so nothing can be scored. Under rule 5b that's FLAG: send one line asking which company they're with and what they want fixed, and hold at COLD until they answer. The no-folder arm gave this answer in both runs.
+- **Under the current rules:** No problem stated and nothing else answered → FLAG (4a): ask every question.
+- **Changed after review** (committed key: COLD): a lead with nothing to score gets asked, not parked (2026-10-09).
+- **Also checked:** ASK NEXT lists every question.
 
 ### Q9 — A small firm with budget and a named problem
 
@@ -155,6 +151,7 @@ Company: Brightwell Bookkeeping, 11 employees
 Message: "We lose about a day a week chasing client documents by email before every month-end close. I've budgeted $15k to automate it this quarter. When can we start?"
 ```
 
-- **Expected tier:** WARM
-- **By the rules:** 1c doesn't fire (there's budget and a named problem). The points add 2b(+3) + 2c(+2) + 2d(+2) + 2e(+1) = 8, which maps to HOT. But 11 employees is far below the size band in 2a, and `reference/icp.md` says Realee sells to mid-sized operating companies. The right call is to nurture a below-band lead, not to give it the founder's calendar: WARM.
-- **Why it's here:** while writing this set we saw that the points and the ICP disagree for small firms with money. We left the folder alone so the runs would show what each arm does with it. The folder is expected to say HOT here and lose.
+- **Expected tier:** HOT
+- **Under the current rules:** P5(+25) a day a week chasing documents + B3(+12) $15k + S2(+8) 11 people + A?3(+9) + R5(+10) founder + T5(+10) "when can we start?" = 74 → HOT (5a). Even read as T4, it's 72 and still HOT.
+- **Changed after review** (committed key: WARM): the size gate is gone (2026-10-11): an 11-person firm loses points on size instead of being held out of HOT.
+- **Also checked:** NEXT books a call; ASK NEXT includes people affected.

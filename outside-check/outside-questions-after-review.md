@@ -1,6 +1,8 @@
 # Outside check — key after the operator's review
 
-Same leads and prompt as [`outside-questions.md`](outside-questions.md), which stays exactly as committed before any run on it. Two keys change after the operator's review of the results, each marked **Changed after review**: a size range that straddles the floor triggers the headcount question (rule 5a), and there's no upper size limit (rule 2a). Grade with `python harness/grade.py run <run folder> outside-check/outside-questions-after-review.md`.
+Same leads and prompt as [`outside-questions.md`](outside-questions.md), which stays exactly as committed before any run on it. The keys below follow the rules as they now stand, after the operator's two rounds of changes (2026-10-09 and the 2026-10-11 redesign, both described in [`questions-after-review.md`](../questions-after-review.md)). Each changed key is marked. Grade with `python harness/grade.py run <run folder> outside-check/outside-questions-after-review.md`.
+
+After the 2026-10-09 calls these leads are no longer held out: those calls were made after seeing them.
 
 ## The prompt both arms get
 
@@ -45,10 +47,9 @@ I want something that reads the invoice, matches it to the load, flags anything 
 How did you hear about us? Saw your post in the TMS users Facebook group
 ```
 
-- **Expected tier:** FLAG
-- **Changed after review** (was WARM): "11-50" straddles the 50-employee floor, so 2a can't be assessed. 2b(+3) + 2d(+2) + 2e(+1) = 6, provisional → FLAG (5a): ask the exact headcount. The folder gave this answer before the rule was written down.
-- **Original reasoning:** 2b(+3) carrier invoices read, matched to loads and keyed into QuickBooks by hand + 2d(+2) owner + 2e(+1) running before January = 6 → WARM (3b). 2a doesn't fire: "11-50" isn't credibly 50–500, and the 30–49 clause needs budget language, which isn't there (asking the price isn't 2c). No FLAG: 5a is for no size hint, and here there is one.
-- **Arguable:** a stranger could argue FLAG, because a 50-person firm would add 2a and reach HOT. The rules say a size bracket is a size hint, so no FLAG.
+- **Expected tier:** WARM
+- **Under the current rules:** P5(+25) carrier invoices matched and keyed by hand, 30 hours a week and a $4,200 double payment + B?3(+12) asked the price, no budget given + S2(+8) "11-50" counts as the lower option + A1(+3) two people + R5(+10) owner + T4(+8) before January = 66 → WARM (5b). The exact headcount goes under ASK NEXT.
+- **Note:** On 2026-10-09 this key was FLAG (a size range straddling the floor triggered the headcount question). Under the redesign the headcount is still asked, under ASK NEXT, and the lead is scored.
 
 ### O2 — VP RevOps, 380 people, CRM hygiene hurting the forecast
 
@@ -75,7 +76,7 @@ Priya
 ```
 
 - **Expected tier:** HOT
-- **By the rules:** 2a(+2) about 380 + 2b(+3) AEs' post-call CRM fields (next steps, MEDDICC) filled in inconsistently, hurting forecast accuracy + 2d(+2) VP + 2e(+1) fix wanted before December planning = 8, and 2a fired → HOT (3a). No 2c: no budget words, and asking about fees isn't budget language.
+- **Under the current rules:** P4(+20) or P5(+25) AEs' CRM fields inconsistently filled, hurting forecast accuracy + B?3(+12) + S4(+16) about 380 + A?3(+9) + R5(+10) VP + T4(+8) before December planning = 75 or 80 → HOT (5a) either way.
 
 ### O3 — Enterprise build-vs-buy check, no budget yet
 
@@ -106,6 +107,5 @@ Meridale Industrial Group
 ```
 
 - **Expected tier:** WARM
-- **Changed after review** (was COLD): there's no upper size limit now, so about 2,300 employees earns 2a. 2a(+2) + 2b-lite(+1) + 2d(+2) + 2e(+1) = 6 → WARM (3b).
-- **Original reasoning:** 2b-lite(+1) evaluating options for procure-to-pay and supplier onboarding, no broken process described + 2d(+2) Director + 2e(+1) build-vs-buy test before year end = 4 → COLD (3c). 2a doesn't fire: about 2,300 employees is above the 50–500 band. No 2c: he says outright there's no approved budget.
-- **Arguable:** a stranger could read the named processes as full 2b (+3), which makes 6 → WARM. We read them as category evaluation, because no broken step is described.
+- **Under the current rules:** P2(+10) evaluating options, no broken step described + B?3(+12) no approved budget yet + S5(+20) about 2,300 + A?3(+9) + R4(+8) director + T4(+8) build-vs-buy decision before year end = 67 → WARM (5b).
+- **Changed after review** (committed key: COLD): no upper size limit (2026-10-09), so 2,300 people now score the top size option.
