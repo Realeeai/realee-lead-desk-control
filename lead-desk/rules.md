@@ -64,6 +64,8 @@ Nothing else is a pass. Industry, company type and wanting an app built never ar
 
 **4a.** If the problem (P) is unanswered, or fewer than three of the six questions are answered, there's too little to score → **FLAG**. Ask every unanswered question before tiering.
 
+**FLAG means 4a and nothing else.** A scored lead is never held back for one missing answer, whatever FLAG is taken to mean elsewhere. When a single unanswered question could move the score across a tier line, the lead still gets the tier its score gives. That question goes **first** under ASK NEXT, marked "(decides the tier)", and is asked straight away: on the booked call for HOT, in the first nurture message for WARM. That's how the desk asks the deciding question first without stopping the lead.
+
 ---
 
 ## 5. Tiers (5a–5c)

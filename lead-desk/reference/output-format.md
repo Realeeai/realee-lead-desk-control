@@ -7,7 +7,7 @@ Every run returns this block (markdown):
 TIER: [HOT|WARM|COLD|DISQUALIFY|FLAG]
 SCORE: P?(+?) + B?(+?) + S?(+?) + A?(+?) + R?(+?) + T?(+?) = [total]/100
 RULES: [rule IDs that decided the tier, e.g. 5a, or 3a, or 4a]
-ASK NEXT: [each unanswered question, in script order, or "nothing, all answered"]
+ASK NEXT: [each unanswered question, in script order; one that could move the tier goes first, marked "(decides the tier)"; or "nothing, all answered"]
 NEXT ACTION: [one line]
 ---
 
